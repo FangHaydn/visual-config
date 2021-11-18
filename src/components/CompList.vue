@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import componentList from "@/custom-component/component-list";
+import componentList from "@/custom/componentList";
 
 export default {
   data() {
@@ -38,29 +38,19 @@ export default {
   padding: 10px;
 
   .list {
-    width: 45%;
+    width: 100%;
+    height: 120px;
     border: 1px solid #ddd;
     cursor: grab;
     margin-bottom: 10px;
     text-align: center;
     color: #333;
-    padding: 2px 5px;
     display: flex;
     align-items: center;
     justify-content: center;
 
     &:active {
       cursor: grabbing;
-    }
-
-    .iconfont {
-      margin-right: 4px;
-      font-size: 20px;
-    }
-
-    .icon-wenben,
-    .icon-tupian {
-      font-size: 18px;
     }
   }
 }

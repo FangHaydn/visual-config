@@ -1,7 +1,6 @@
 import store from './index';
 import toast from '@/utils/toast';
 import generateID from '@/utils/generateID';
-import { deepCopy } from '@/utils/utils';
 
 export default {
   state: {
@@ -46,7 +45,7 @@ export default {
         });
       }
 
-      store.commit('addComponent', { component: deepCopy(data) });
+      store.commit('addComponent', { component: _.deepClone(data) });
       if (state.isCut) {
         state.copyData = null;
       }
@@ -71,7 +70,7 @@ export default {
 // 恢复上一次剪切的数据
 function restorePreCutData(state) {
   if (state.isCut && state.copyData) {
-    const data = deepCopy(state.copyData.data);
+    const data = _.deepClone(state.copyData.data);
     const index = state.copyData.index;
     data.id = generateID();
     store.commit('addComponent', { component: data, index });
@@ -84,7 +83,7 @@ function restorePreCutData(state) {
 
 function copyData(state) {
   state.copyData = {
-    data: deepCopy(state.curComponent),
+    data: _.deepClone(state.curComponent),
     index: state.curComponentIndex,
   };
 }

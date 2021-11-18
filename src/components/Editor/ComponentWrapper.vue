@@ -12,8 +12,6 @@
 
 <script>
 import { getStyle } from "@/utils/style";
-import runAnimation from "@/utils/runAnimation";
-import { mixins } from "@/utils/events";
 
 export default {
   props: {
@@ -23,9 +21,7 @@ export default {
     },
   },
   mounted() {
-    runAnimation(this.$el, this.config.animations);
   },
-  mixins: [mixins],
   methods: {
     getStyle,
 

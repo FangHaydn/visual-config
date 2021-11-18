@@ -6,11 +6,11 @@
     @mousedown="handleMouseDownOnShape"
   >
     <span
-      class="iconfont icon-xiangyouxuanzhuan"
+      class=" el-icon-refresh-right"
       v-show="isActive()"
       @mousedown="handleRotate"
     ></span>
-    <span class="iconfont icon-suo" v-show="element.isLock"></span>
+    <span class=" el-icon-lock" v-show="element.isLock"></span>
     <div
       class="shape-point"
       v-for="item in isActive() ? pointList : []"
@@ -24,7 +24,6 @@
 
 <script>
 import eventBus from "@/utils/eventBus";
-import runAnimation from "@/utils/runAnimation";
 import { mapState } from "vuex";
 import calculateComponentPositonAndSize from "@/utils/calculateComponentPositonAndSize";
 import { mod360 } from "@/utils/translate";
@@ -82,12 +81,6 @@ export default {
     if (this.curComponent) {
       this.cursors = this.getCursor(); // 根据旋转角度获取光标位置
     }
-
-    eventBus.$on("runAnimation", () => {
-      if (this.element == this.curComponent) {
-        runAnimation(this.$el, this.curComponent.animations);
-      }
-    });
   },
   methods: {
     isActive() {
@@ -392,7 +385,7 @@ export default {
   border-radius: 50%;
   z-index: 1;
 }
-.icon-xiangyouxuanzhuan {
+.el-icon-refresh-right {
   position: absolute;
   top: -34px;
   left: 50%;
@@ -408,7 +401,7 @@ export default {
     cursor: grabbing;
   }
 }
-.icon-suo {
+.el-icon-lock {
   position: absolute;
   top: 0;
   right: 0;

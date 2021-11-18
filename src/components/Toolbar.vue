@@ -3,32 +3,9 @@
     <div class="toolbar">
       <el-button @click="undo">撤消</el-button>
       <el-button @click="redo">重做</el-button>
-      <label for="input" class="insert">插入图片</label>
-      <input type="file" @change="handleFileChange" id="input" hidden />
-      <el-button @click="preview" style="margin-left: 10px">预览</el-button>
-      <el-button @click="save">保存</el-button>
       <el-button @click="clearCanvas">清空画布</el-button>
-      <el-button @click="compose" :disabled="!areaData.components.length"
-        >组合</el-button
-      >
-      <el-button
-        @click="decompose"
-        :disabled="
-          !curComponent ||
-          curComponent.isLock ||
-          curComponent.component != 'Group'
-        "
-        >拆分</el-button
-      >
-
-      <el-button @click="lock" :disabled="!curComponent || curComponent.isLock"
-        >锁定</el-button
-      >
-      <el-button
-        @click="unlock"
-        :disabled="!curComponent || !curComponent.isLock"
-        >解锁</el-button
-      >
+      <el-button @click="preview">预览</el-button>
+      <el-button @click="save">保存</el-button>
       <div class="canvas-config">
         <span>画布大小</span>
         <input v-model="canvasStyleData.width" />
@@ -53,7 +30,6 @@ import { mapState } from "vuex";
 import Preview from "@/components/Editor/Preview";
 import { commonStyle, commonAttr } from "@/custom-component/component-list";
 import eventBus from "@/utils/eventBus";
-import { deepCopy } from "@/utils/utils";
 
 export default {
   components: { Preview },
@@ -103,7 +79,7 @@ export default {
         // 画布比例设一个最小值，不能为 0
         // eslint-disable-next-line no-bitwise
         this.scale = ~~this.scale || 1;
-        const componentData = deepCopy(this.componentData);
+        const componentData = _.deepClone(this.componentData);
         componentData.forEach((component) => {
           Object.keys(component.style).forEach((key) => {
             if (this.needToChange.includes(key)) {
@@ -123,24 +99,6 @@ export default {
           scale: this.scale,
         });
       }, 1000);
-    },
-
-    lock() {
-      this.$store.commit("lock");
-    },
-
-    unlock() {
-      this.$store.commit("unlock");
-    },
-
-    compose() {
-      this.$store.commit("compose");
-      this.$store.commit("recordSnapshot");
-    },
-
-    decompose() {
-      this.$store.commit("decompose");
-      this.$store.commit("recordSnapshot");
     },
 
     undo() {
@@ -220,9 +178,11 @@ export default {
 
 <style lang="scss" scoped>
 .toolbar {
-  padding: 15px 10px;
-  white-space: nowrap;
-  overflow-x: auto;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 0 16px;
   background: #fff;
   border-bottom: 1px solid #ddd;
 

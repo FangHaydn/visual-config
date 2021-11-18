@@ -14,7 +14,7 @@ const routes = [
   },
   {
     path: '*',
-    redirect: '/404',
+    redirect: '/home',
   },
 ];
 

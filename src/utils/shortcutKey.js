@@ -7,8 +7,6 @@ const ctrlKey = 17,
   xKey = 88, // 剪切
   yKey = 89, // 重做
   zKey = 90, // 撤销
-  gKey = 71, // 组合
-  bKey = 66, // 拆分
   lKey = 76, // 锁定
   uKey = 85, // 解锁
   sKey = 83, // 保存
@@ -40,8 +38,6 @@ const unlockMap = {
   ...basemap,
   [cKey]: copy,
   [xKey]: cut,
-  [gKey]: compose,
-  [bKey]: decompose,
   [dKey]: deleteComponent,
   [deleteKey]: deleteComponent,
   [lKey]: lock,
@@ -94,21 +90,6 @@ function redo() {
 
 function undo() {
   store.commit('undo');
-}
-
-function compose() {
-  if (store.state.areaData.components.length) {
-    store.commit('compose');
-    store.commit('recordSnapshot');
-  }
-}
-
-function decompose() {
-  const curComponent = store.state.curComponent;
-  if (curComponent && !curComponent.isLock && curComponent.component == 'Group') {
-    store.commit('decompose');
-    store.commit('recordSnapshot');
-  }
 }
 
 function save() {

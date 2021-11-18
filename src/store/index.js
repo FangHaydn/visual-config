@@ -1,10 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import animation from './animation';
-import compose from './compose';
 import contextmenu from './contextmenu';
 import copy from './copy';
-import event from './event';
 import layer from './layer';
 import snapshot from './snapshot';
 import lock from './lock';
@@ -13,11 +10,8 @@ Vue.use(Vuex);
 
 const data = {
   state: {
-    ...animation.state,
-    ...compose.state,
     ...contextmenu.state,
     ...copy.state,
-    ...event.state,
     ...layer.state,
     ...snapshot.state,
     ...lock.state,
@@ -35,16 +29,18 @@ const data = {
     // 点击画布时是否点中组件，主要用于取消选中组件用。
     // 如果没点中组件，并且在画布空白处弹起鼠标，则取消当前组件的选中状态
     isClickComponent: false,
+    editor: null,
   },
   mutations: {
-    ...animation.mutations,
-    ...compose.mutations,
     ...contextmenu.mutations,
     ...copy.mutations,
-    ...event.mutations,
     ...layer.mutations,
     ...snapshot.mutations,
     ...lock.mutations,
+
+    getEditor(state) {
+      state.editor = document.querySelector('#editor');
+    },
 
     setClickComponentStatus(state, status) {
       state.isClickComponent = status;

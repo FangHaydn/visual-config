@@ -5,11 +5,12 @@ import App from './App.vue';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import './styles/reset.css';
-import './styles/animate.css';
 import './styles/common.scss';
-import '@/custom-component'; // 注册自定义组件
-import '@/assets/iconfont/iconfont.css';
-
+import '@/custom';
+import _ from 'underscore';
+import deepclone from 'underscore.deepclone';
+_.mixin(deepclone);
+window._ = _;
 Vue.use(ElementUI, { size: 'small' });
 
 Vue.config.productionTip = false;

@@ -2,10 +2,10 @@
   <div class="home">
     <Toolbar />
 
-    <main>
+    <div class="main">
       <!-- 左侧组件列表 -->
       <section class="left">
-        <ComponentList />
+        <CompList />
       </section>
       <!-- 中间画布 -->
       <section class="center">
@@ -26,29 +26,18 @@
             <AttrList v-if="curComponent" />
             <p v-else class="placeholder">请选择组件</p>
           </el-tab-pane>
-          <el-tab-pane label="动画" name="animation">
-            <AnimationList v-if="curComponent" />
-            <p v-else class="placeholder">请选择组件</p>
-          </el-tab-pane>
-          <el-tab-pane label="事件" name="events">
-            <EventList v-if="curComponent" />
-            <p v-else class="placeholder">请选择组件</p>
-          </el-tab-pane>
         </el-tabs>
       </section>
-    </main>
+    </div>
   </div>
 </template>
 
 <script>
 import Editor from "@/components/Editor/index";
-import ComponentList from "@/components/ComponentList"; // 左侧列表组件
+import CompList from "@/components/CompList"; // 左侧列表组件
 import AttrList from "@/components/AttrList"; // 右侧属性列表
-import AnimationList from "@/components/AnimationList"; // 右侧动画列表
-import EventList from "@/components/EventList"; // 右侧事件列表
-import componentList from "@/custom-component/component-list"; // 左侧列表数据
+import componentList from "@/custom/componentList"; // 左侧列表数据
 import Toolbar from "@/components/Toolbar";
-import { deepCopy } from "@/utils/utils";
 import { mapState } from "vuex";
 import generateID from "@/utils/generateID";
 import { listenGlobalKeyDown } from "@/utils/shortcutKey";
@@ -56,16 +45,13 @@ import { listenGlobalKeyDown } from "@/utils/shortcutKey";
 export default {
   components: {
     Editor,
-    ComponentList,
+    CompList,
     AttrList,
-    AnimationList,
-    EventList,
     Toolbar,
   },
   data() {
     return {
       activeName: "attr",
-      reSelectAnimateIndex: undefined,
     };
   },
   computed: mapState([
@@ -112,7 +98,7 @@ export default {
       const index = e.dataTransfer.getData("index");
       const rectInfo = this.editor.getBoundingClientRect();
       if (index) {
-        const component = deepCopy(componentList[index]);
+        const component = _.deepClone(componentList[index]);
         component.style.top = e.clientY - rectInfo.y;
         component.style.left = e.clientX - rectInfo.x;
         component.id = generateID();
@@ -149,8 +135,8 @@ export default {
   height: 100vh;
   background: #fff;
 
-  main {
-    height: calc(100% - 64px);
+  .main {
+    height: calc(100% - 56px); //toolbar.height=56
     position: relative;
 
     .left {
@@ -168,6 +154,11 @@ export default {
       width: 262px;
       right: 0;
       top: 0;
+
+      .el-tab-pane {
+        height: calc(100vh - 56px - 55px);
+        overflow-y: scroll;
+      }
     }
 
     .center {
