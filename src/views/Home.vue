@@ -18,6 +18,7 @@
         >
           <Editor />
         </div>
+        <ControlBar />
       </section>
       <!-- 右侧属性列表 -->
       <section class="right">
@@ -38,6 +39,7 @@ import CompList from "@/components/CompList"; // 左侧列表组件
 import AttrList from "@/components/AttrList"; // 右侧属性列表
 import componentList from "@/custom/componentList"; // 左侧列表数据
 import Toolbar from "@/components/Toolbar";
+import ControlBar from "@/components/ControlBar";
 import { mapState } from "vuex";
 import generateID from "@/utils/generateID";
 import { listenGlobalKeyDown } from "@/utils/shortcutKey";
@@ -48,6 +50,7 @@ export default {
     CompList,
     AttrList,
     Toolbar,
+    ControlBar
   },
   data() {
     return {
@@ -133,7 +136,7 @@ export default {
 <style lang="scss">
 .home {
   height: 100vh;
-  background: #fff;
+  background-color: #000;
 
   .main {
     height: calc(100% - 56px); //toolbar.height=56
@@ -146,6 +149,7 @@ export default {
       left: 0;
       top: 0;
       padding-top: 10px;
+      background-color: #13161a;
     }
 
     .right {
@@ -154,6 +158,7 @@ export default {
       width: 262px;
       right: 0;
       top: 0;
+      background-color: #13161a;
 
       .el-tab-pane {
         height: calc(100vh - 56px - 55px);
@@ -164,14 +169,13 @@ export default {
     .center {
       margin-left: 200px;
       margin-right: 262px;
-      background: #f5f5f5;
+      background-color: #2b2e33;
       height: 100%;
       overflow: auto;
-      padding: 20px;
 
       .content {
         width: 100%;
-        height: 100%;
+        height: calc(100% - 40px);
         overflow: auto;
       }
     }

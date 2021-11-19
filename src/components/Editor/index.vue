@@ -102,12 +102,14 @@ export default {
     },
 
     getShapeStyle(style) {
-      const result = {};
+      const result = {
+        transformOrigin: '0 0'
+      };
       ["width", "height", "top", "left", "rotate"].forEach((attr) => {
         if (attr != "rotate") {
           result[attr] = style[attr] + "px";
         } else {
-          result.transform = "rotate(" + style[attr] + "deg)";
+          result.transform = `rotate(${style[attr]}deg)`;
         }
       });
 
@@ -124,8 +126,9 @@ export default {
 <style lang="scss" scoped>
 .editor {
   position: relative;
-  background: #fff;
-  margin: auto;
+  background: #030303;
+  margin: 20px auto;
+  box-shadow: 0 0 10px 0px #0003;
 
   .lock {
     opacity: 0.5;
