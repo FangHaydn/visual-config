@@ -9,15 +9,9 @@
       </section>
       <!-- 中间画布 -->
       <section class="center">
-        <div
-          class="content"
-          @drop="handleDrop"
-          @dragover="handleDragOver"
-          @mousedown="handleMouseDown"
-          @mouseup="deselectCurComponent"
-        >
+        <div class="content" @drop="handleDrop" @dragover="handleDragOver">
           <div class="editor-wrap">
-          <Editor />
+            <Editor />
           </div>
         </div>
         <ControlBar />
@@ -52,7 +46,7 @@ export default {
     CompList,
     AttrList,
     Toolbar,
-    ControlBar
+    ControlBar,
   },
   data() {
     return {
@@ -62,7 +56,6 @@ export default {
   computed: mapState([
     "componentData",
     "curComponent",
-    "isClickComponent",
     "canvasStyleData",
     "editor",
   ]),
@@ -116,21 +109,6 @@ export default {
       e.preventDefault();
       e.dataTransfer.dropEffect = "copy";
     },
-
-    handleMouseDown() {
-      this.$store.commit("setClickComponentStatus", false);
-    },
-
-    deselectCurComponent(e) {
-      if (!this.isClickComponent) {
-        this.$store.commit("setCurComponent", { component: null, index: null });
-      }
-
-      // 0 左击 1 滚轮 2 右击
-      if (e.button != 2) {
-        this.$store.commit("hideContextMenu");
-      }
-    },
   },
 };
 </script>
@@ -182,7 +160,6 @@ export default {
         .editor-wrap {
           display: inline-block;
           padding: 20px;
-          border: 1px solid transparent;
         }
       }
     }

@@ -2,38 +2,50 @@
   <div
     class="editor"
     id="editor"
-    :class="{ edit: isEdit }"
     :style="{
-      width: changeStyleWithScale(canvasStyleData.width) + 'px',
-      height: changeStyleWithScale(canvasStyleData.height) + 'px',
+      width: canvasStyleData.width + 'px',
+      height: canvasStyleData.height + 'px',
     }"
-    @contextmenu="handleContextMenu"
+    @click="onClickEditor"
+    @contextmenu="handleEditorContextMenu"
   >
     <!--页面组件列表展示-->
-    <Shape
-      v-for="(item, index) in componentData"
-      :defaultStyle="item.style"
-      :style="getShapeStyle(item.style)"
+    <vue-draggable-resizable
+      v-for="(item, i) in componentData"
+      :prevent-deactivation="true"
       :key="item.id"
-      :active="item.id === (curComponent || {}).id"
-      :element="item"
-      :index="index"
-      :class="{ lock: item.isLock }"
+      :w="item.style.width"
+      :h="item.style.height"
+      :x="item.style.left"
+      :y="item.style.top"
+      :parent="true"
+      :active="curComponentIndex === i"
+      @dragging="(x, y) => onDrag(x, y, item, i)"
+      @resizing="onResize"
     >
-      <component
-        class="component"
-        :is="item.component"
-        :style="getComponentStyle(item.style)"
-        :propValue="item.propValue"
-        :element="item"
-        :id="'component' + item.id"
-      />
-    </Shape>
+      <div
+        :style="{
+          width: item.style.width + 'px',
+          height: item.style.height + 'px',
+        }"
+        @click="(e) => onClick(e, item, i)"
+        @contextmenu="(e) => handleContextMenu(e, item, i)"
+      >
+        <component
+          class="component"
+          :is="item.component"
+          :style="getComponentStyle(item.style)"
+          :propValue="item.propValue"
+          :element="item"
+          :id="'component' + item.id"
+          @click="(e) => onClick(e, item, i)"
+        @contextmenu="(e) => handleContextMenu(e, item, i)"
+        />
+      </div>
+    </vue-draggable-resizable>
     <!-- 右击菜单 -->
     <ContextMenu />
     <!-- 标线 -->
-    <MarkLine />
-    <!-- 选中区域 -->
   </div>
 </template>
 
@@ -42,34 +54,20 @@ import { mapState } from "vuex";
 import Shape from "./Shape";
 import { getStyle } from "@/utils/style";
 import ContextMenu from "./ContextMenu";
-import MarkLine from "./MarkLine";
-import { changeStyleWithScale } from "@/utils/translate";
 
 export default {
-  props: {
-    isEdit: {
-      type: Boolean,
-      default: true,
-    },
-  },
-  components: { Shape, ContextMenu, MarkLine },
+  props: {},
+  components: { Shape, ContextMenu },
   data() {
     return {
-      editorX: 0,
-      editorY: 0,
-      start: {
-        // 选中区域的起点
-        x: 0,
-        y: 0,
-      },
-      width: 0,
-      height: 0,
       isShowArea: false,
+      resizing: false,
     };
   },
   computed: mapState([
     "componentData",
     "curComponent",
+    "curComponentIndex",
     "canvasStyleData",
     "editor",
   ]),
@@ -78,46 +76,80 @@ export default {
     this.$store.commit("getEditor");
   },
   methods: {
-    changeStyleWithScale,
-
-    handleContextMenu(e) {
+    onDrag(x, y, item, idx) {
+      if (!this.curComponent || this.curComponentIndex !== idx) {
+        this.$store.commit("setCurComponent", {
+          component: item,
+          index: idx,
+        });
+      } else {
+        let pos = { ...this.curComponent.style, top: y, left: x };
+        this.$store.commit("setShapeStyle", pos);
+      }
+    },
+    onResize(x, y, width, height) {
+      this.resizing = true;
+      let pos = { ...this.curComponent.style, top: y, left: x, width, height };
+      this.$store.commit("setShapeStyle", pos);
+      setTimeout(() => {
+        this.resizing = false;
+      }, 500);
+    },
+    onClickEditor(e) {
       e.stopPropagation();
       e.preventDefault();
+      if (this.resizing) return;
+      this.$store.commit("hideContextMenu");
+      this.$store.commit("setCurComponent", {
+        component: null,
+        index: null,
+      });
+    },
+    onClick(e, item, idx) {
+      e.stopPropagation();
+      e.preventDefault();
+      this.$store.commit("hideContextMenu");
+      if (this.curComponentIndex !== idx) {
+        this.$store.commit("setCurComponent", {
+          component: item,
+          index: idx,
+        });
+      }
+    },
 
+    handleContextMenu(e, item, idx) {
+      e.stopPropagation();
+      e.preventDefault();
+      this.$store.commit("hideContextMenu");
+      if (this.curComponentIndex !== idx) {
+        this.$store.commit("setCurComponent", {
+          component: item,
+          index: idx,
+        });
+      }
+      // 计算菜单相对于编辑器的位移
+      let target = e.target;
+      let top = e.offsetY + item.style.top;
+      let left = e.offsetX + item.style.left;
+      this.$store.commit("showContextMenu", { top, left });
+    },
+    handleEditorContextMenu(e) {
+      e.stopPropagation();
+      e.preventDefault();
+      this.$store.commit("hideContextMenu");
+      this.$store.commit("setCurComponent", {
+        component: null,
+        index: null,
+      });
       // 计算菜单相对于编辑器的位移
       let target = e.target;
       let top = e.offsetY;
       let left = e.offsetX;
-      while (target instanceof SVGElement) {
-        target = target.parentNode;
-      }
-
-      while (!target.className.includes("editor")) {
-        left += target.offsetLeft;
-        top += target.offsetTop;
-        target = target.parentNode;
-      }
-
       this.$store.commit("showContextMenu", { top, left });
     },
 
-    getShapeStyle(style) {
-      const result = {
-        transformOrigin: '0 0'
-      };
-      ["width", "height", "top", "left", "rotate"].forEach((attr) => {
-        if (attr != "rotate") {
-          result[attr] = style[attr] + "px";
-        } else {
-          result.transform = `rotate(${style[attr]}deg)`;
-        }
-      });
-
-      return result;
-    },
-
     getComponentStyle(style) {
-      return getStyle(style, ["top", "left", "width", "height", "rotate"]);
+      return getStyle(style, ["top", "left", "rotate"]);
     },
   },
 };
@@ -135,13 +167,6 @@ export default {
     &:hover {
       cursor: not-allowed;
     }
-  }
-}
-.edit {
-  .component {
-    outline: none;
-    width: 100%;
-    height: 100%;
   }
 }
 </style>
