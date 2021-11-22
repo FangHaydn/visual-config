@@ -16,7 +16,9 @@
           @mousedown="handleMouseDown"
           @mouseup="deselectCurComponent"
         >
+          <div class="editor-wrap">
           <Editor />
+          </div>
         </div>
         <ControlBar />
       </section>
@@ -102,8 +104,8 @@ export default {
       const rectInfo = this.editor.getBoundingClientRect();
       if (index) {
         const component = _.deepClone(componentList[index]);
-        component.style.top = e.clientY - rectInfo.y;
-        component.style.left = e.clientX - rectInfo.x;
+        component.style.top = Math.floor(e.clientY - rectInfo.y);
+        component.style.left = Math.floor(e.clientX - rectInfo.x);
         component.id = generateID();
         this.$store.commit("addComponent", { component });
         this.$store.commit("recordSnapshot");
@@ -171,12 +173,17 @@ export default {
       margin-right: 262px;
       background-color: #2b2e33;
       height: 100%;
-      overflow: auto;
 
       .content {
         width: 100%;
         height: calc(100% - 40px);
         overflow: auto;
+
+        .editor-wrap {
+          display: inline-block;
+          padding: 20px;
+          border: 1px solid transparent;
+        }
       }
     }
   }

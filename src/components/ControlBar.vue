@@ -54,24 +54,27 @@ export default {
   created() {
     this.scale = this.canvasStyleData.scale;
     this.handleScaleChange = _.debounce(() => {
-      // 画布比例设一个最小值，不能为 0
-      // eslint-disable-next-line no-bitwise
-      this.scale = ~~this.scale || 1;
-      const componentData = _.deepClone(this.componentData);
-      componentData.forEach((component) => {
-        Object.keys(component.style).forEach((key) => {
-          if (this.needToChange.includes(key)) {
-            // 根据原来的比例获取样式原来的尺寸
-            // 再用原来的尺寸 * 现在的比例得出新的尺寸
-            // 不能用 Math.round 防止 1 px 的边框变 0
-            component.style[key] = Math.ceil(
-              this.format(this.getOriginStyle(component.style[key]))
-            );
-          }
-        });
-      });
+      let dom = document.querySelector('.editor-wrap')
+      dom.style.transformOrigin = '0 0';
+      dom.style.transform = `scale(${this.scale/100})`;
+      // // 画布比例设一个最小值，不能为 0
+      // // eslint-disable-next-line no-bitwise
+      // this.scale = ~~this.scale || 1;
+      // const componentData = _.deepClone(this.componentData);
+      // componentData.forEach((component) => {
+      //   Object.keys(component.style).forEach((key) => {
+      //     if (this.needToChange.includes(key)) {
+      //       // 根据原来的比例获取样式原来的尺寸
+      //       // 再用原来的尺寸 * 现在的比例得出新的尺寸
+      //       // 不能用 Math.round 防止 1 px 的边框变 0
+      //       component.style[key] = Math.ceil(
+      //         this.format(this.getOriginStyle(component.style[key]))
+      //       );
+      //     }
+      //   });
+      // });
 
-      this.$store.commit("setComponentData", componentData);
+      // this.$store.commit("setComponentData", componentData);
       this.$store.commit("setCanvasStyle", {
         ...this.canvasStyleData,
         scale: this.scale,

@@ -127,7 +127,6 @@ export default {
 .editor {
   position: relative;
   background: #030303;
-  margin: 20px auto;
   box-shadow: 0 0 10px 0px #0003;
 
   .lock {
