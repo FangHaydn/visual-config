@@ -21,7 +21,9 @@
       :parent="true"
       :active="curComponentIndex === i"
       @dragging="(x, y) => onDrag(x, y, item, i)"
+      @dragstop="dragstop"
       @resizing="onResize"
+      @resizestop="resizestop"
     >
       <div
         :style="{
@@ -51,13 +53,13 @@
 
 <script>
 import { mapState } from "vuex";
-import Shape from "./Shape";
 import { getStyle } from "@/utils/style";
 import ContextMenu from "./ContextMenu";
+import eventBus from "@/utils/eventBus";
 
 export default {
   props: {},
-  components: { Shape, ContextMenu },
+  components: {ContextMenu },
   data() {
     return {
       isShowArea: false,
@@ -86,6 +88,10 @@ export default {
         let pos = { ...this.curComponent.style, top: y, left: x };
         this.$store.commit("setShapeStyle", pos);
       }
+      eventBus.$emit('move', x, y)
+    },
+    dragstop(){
+      eventBus.$emit('unmove')
     },
     onResize(x, y, width, height) {
       this.resizing = true;
@@ -94,6 +100,10 @@ export default {
       setTimeout(() => {
         this.resizing = false;
       }, 500);
+      eventBus.$emit('resize',x,y, width, height)
+    },
+    resizestop(){
+      eventBus.$emit('unresize')
     },
     onClickEditor(e) {
       e.stopPropagation();
@@ -160,6 +170,10 @@ export default {
   position: relative;
   background: #030303;
   box-shadow: 0 0 10px 0px #0003;
+
+  .vdr {
+    border-width: 0;
+  }
 
   .lock {
     opacity: 0.5;

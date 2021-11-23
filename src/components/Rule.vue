@@ -1,5 +1,5 @@
 <template>
-  <div :class="[direction === 'ver' ? 'scan-ver' : 'scan']">
+  <div :class="['scan', direction === 'ver' ? 'scan-ver' : 'scan-hor']">
     <div
       class="bar"
       :style="{
@@ -39,7 +39,7 @@ export default {
     },
     numbers: {
       type: Number,
-      default: 1200,
+      default: 0,
     },
     move: {
       type: Number,
@@ -48,7 +48,7 @@ export default {
   },
   computed: {
     tags() {
-      return Math.floor(this.numbers / 10) + 1;
+      return Math.ceil(this.numbers / 100) * 10 + 1;
     },
     ...mapState(["canvasStyleData"]),
   },
@@ -60,8 +60,6 @@ export default {
   position: absolute;
   top: 0px;
   left: 0px;
-  width: 100%;
-  padding-left: 40px;
   overflow: hidden;
   color: #333;
   background-color: #0e1013;
@@ -69,6 +67,11 @@ export default {
   &::-webkit-scrollbar {
     display: none;
   }
+}
+.scan-hor {
+  width: 100%;
+  padding-left: 40px;
+
   .bar {
     transform-origin: 0 20px;
     display: flex;
@@ -99,18 +102,8 @@ export default {
 }
 
 .scan-ver {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  overflow: hidden;
-  color: #333;
   padding-top: 40px;
-  background-color: #0e1013;
   height: calc(100% - 40px);
-  -ms-overflow-style: none;
-  &::-webkit-scrollbar {
-    display: none;
-  }
 
   .bar {
     transform-origin: 20px 0;

@@ -12,6 +12,7 @@
         <div class="content" @drop="handleDrop" @dragover="handleDragOver">
           <div class="editor-wrap">
             <Editor />
+            <MarkLine/>
           </div>
         </div>
         <Rule :numbers="canvasStyleData.width" :move="scrollLeft" />
@@ -42,6 +43,7 @@ import AttrList from "@/components/AttrList"; // 右侧属性列表
 import componentList from "@/custom/componentList"; // 左侧列表数据
 import Toolbar from "@/components/Toolbar";
 import ControlBar from "@/components/ControlBar";
+import MarkLine from "@/components/MarkLine";
 import Rule from "@/components/Rule";
 import { mapState } from "vuex";
 import generateID from "@/utils/generateID";
@@ -55,6 +57,7 @@ export default {
     Toolbar,
     ControlBar,
     Rule,
+    MarkLine
   },
   data() {
     return {
