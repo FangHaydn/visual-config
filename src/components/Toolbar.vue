@@ -3,19 +3,9 @@
     <div class="toolbar">
       <p>XX数据大屏</p>
       <div>
-        <el-button @click="preview" icon="el-icon-view" type="info"></el-button>
-        <el-button
-          @click="save"
-          icon="el-icon-document-checked"
-          type="primary"
-        ></el-button>
+        <el-button @click="preview" icon="icon-view" type="info"></el-button>
+        <el-button @click="save" icon="icon-save" type="primary"></el-button>
       </div>
-      <!-- <div class="canvas-config">
-        <span>画布大小</span>
-        <input v-model="canvasStyleData.width" />
-        <span>*</span>
-        <input v-model="canvasStyleData.height" />
-      </div> -->
     </div>
 
     <!-- 预览 -->
@@ -35,11 +25,10 @@ export default {
       isShowPreview: false,
     };
   },
-  computed: mapState(["componentData", "canvasStyleData", "curComponent"]),
+  computed: mapState(["componentData", "canvasStyleData"]),
   created() {
     eventBus.$on("preview", this.preview);
     eventBus.$on("save", this.save);
-    eventBus.$on("clearCanvas", this.clearCanvas);
   },
   methods: {
     preview() {

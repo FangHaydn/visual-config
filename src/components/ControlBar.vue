@@ -3,17 +3,17 @@
     <div>
       <el-button
         @click="undo"
-        icon="el-icon-d-arrow-left"
+        icon="icon-undo"
         type="text"
       ></el-button>
       <el-button
         @click="redo"
-        icon="el-icon-d-arrow-right"
+        icon="icon-redo"
         type="text"
       ></el-button>
       <el-button
         @click="clearCanvas"
-        icon="el-icon-delete"
+        icon="icon-clear"
         type="text"
       ></el-button>
     </div>

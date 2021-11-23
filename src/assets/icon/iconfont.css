@@ -1,0 +1,76 @@
+@font-face {
+  font-family: iconfonts; /* Project id 2958890 */
+  src: url('iconfont.woff?t=1637648242671') format('woff'),
+       url('iconfont.ttf?t=1637648242671') format('truetype');
+  font-weight: 400;
+  font-display: 'auto';
+  font-style: normal;
+}
+
+[class*=' icon-'],
+[class^='icon-'] {
+  font-family: iconfonts !important;
+  speak: none;
+  font-style: normal;
+  font-weight: 400;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  vertical-align: baseline;
+  display: inline-block;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-download:before {
+  content: "\e66c";
+}
+
+.icon-camera:before {
+  content: "\e620";
+}
+
+.icon-view:before {
+  content: "\e607";
+}
+
+.icon-redo:before {
+  content: "\e993";
+}
+
+.icon-undo:before {
+  content: "\e9b3";
+}
+
+.icon-clear:before {
+  content: "\e62a";
+}
+
+.icon-save:before {
+  content: "\e65e";
+}
+
+.icon-piechart:before {
+  content: "\e78e";
+}
+
+.icon-linechart:before {
+  content: "\e7af";
+}
+
+.icon-barchart:before {
+  content: "\e7b0";
+}
+
+.icon-radarchart:before {
+  content: "\e7dc";
+}
+
+.icon-gaugechart:before {
+  content: "\e614";
+}
+
+.icon-tablechart:before {
+  content: "\ebe8";
+}
+

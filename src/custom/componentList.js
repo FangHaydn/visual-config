@@ -29,6 +29,7 @@ const list = [
   {
     component: 'line-chart',
     label: '折线图',
+    icon: 'icon-linechart',
     style: {
       width: 200,
       height: 200,
