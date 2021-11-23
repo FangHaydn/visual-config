@@ -1,0 +1,144 @@
+<template>
+  <div :class="[direction === 'ver' ? 'scan-ver' : 'scan']">
+    <div
+      class="bar"
+      :style="{
+        width: direction === 'ver' ? '20px' : numbers + 100 + 'px',
+        transform: `translate${
+          direction === 'ver' ? 'Y' : 'X'
+        }(-${move}px) scale(${canvasStyleData.scale / 100})`,
+      }"
+    >
+      <div
+        v-for="item in tags"
+        :key="item"
+        :class="[
+          'tag',
+          (item - 1) % 10 === 0 ? 'h10' : (item - 1) % 5 === 0 ? 'h7' : null,
+        ]"
+      >
+        <span v-if="(item - 1) % 10 === 0" class="num">{{
+          (item - 1) * 10
+        }}</span>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { mapState } from "vuex";
+
+export default {
+  data() {
+    return {};
+  },
+  props: {
+    direction: {
+      type: String,
+      default: "hor", // 'hor' 'ver'
+    },
+    numbers: {
+      type: Number,
+      default: 1200,
+    },
+    move: {
+      type: Number,
+      default: 0,
+    },
+  },
+  computed: {
+    tags() {
+      return Math.floor(this.numbers / 10) + 1;
+    },
+    ...mapState(["canvasStyleData"]),
+  },
+};
+</script>
+
+<style lang="scss">
+.scan {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  padding-left: 40px;
+  overflow: hidden;
+  color: #333;
+  background-color: #0e1013;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  .bar {
+    transform-origin: 0 20px;
+    display: flex;
+    align-items: flex-end;
+    height: 20px;
+    .tag {
+      position: relative;
+      display: inline-block;
+      border-left: 1px solid #555;
+      width: 10px;
+      height: 3px;
+
+      .num {
+        position: absolute;
+        left: 3px;
+        top: -5px;
+        font-size: 10px;
+        color: #eee;
+      }
+    }
+    .h7 {
+      height: 7px;
+    }
+    .h10 {
+      height: 10px;
+    }
+  }
+}
+
+.scan-ver {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
+  color: #333;
+  padding-top: 40px;
+  background-color: #0e1013;
+  height: calc(100% - 40px);
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  .bar {
+    transform-origin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 20px;
+    .tag {
+      position: relative;
+      border-top: 1px solid #555;
+      width: 3px;
+      height: 10px;
+
+      .num {
+        position: absolute;
+        left: -5px;
+        top: 3px;
+        font-size: 10px;
+        color: #eee;
+        writing-mode: vertical-lr;
+      }
+    }
+    .h7 {
+      width: 7px;
+    }
+    .h10 {
+      width: 10px;
+    }
+  }
+}
+</style>

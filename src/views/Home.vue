@@ -14,6 +14,12 @@
             <Editor />
           </div>
         </div>
+        <Rule :numbers="canvasStyleData.width" :move="scrollLeft" />
+        <Rule
+          :numbers="canvasStyleData.height"
+          direction="ver"
+          :move="scrollTop"
+        />
         <ControlBar />
       </section>
       <!-- 右侧属性列表 -->
@@ -36,6 +42,7 @@ import AttrList from "@/components/AttrList"; // 右侧属性列表
 import componentList from "@/custom/componentList"; // 左侧列表数据
 import Toolbar from "@/components/Toolbar";
 import ControlBar from "@/components/ControlBar";
+import Rule from "@/components/Rule";
 import { mapState } from "vuex";
 import generateID from "@/utils/generateID";
 import { listenGlobalKeyDown } from "@/utils/shortcutKey";
@@ -47,10 +54,13 @@ export default {
     AttrList,
     Toolbar,
     ControlBar,
+    Rule,
   },
   data() {
     return {
       activeName: "attr",
+      scrollTop: 0,
+      scrollLeft: 0,
     };
   },
   computed: mapState([
@@ -63,6 +73,9 @@ export default {
     this.restore();
     // 全局监听按键事件
     listenGlobalKeyDown();
+  },
+  mounted() {
+    document.querySelector(".content").onscroll = _.debounce(this.scroll, 10);
   },
   methods: {
     restore() {
@@ -109,6 +122,11 @@ export default {
       e.preventDefault();
       e.dataTransfer.dropEffect = "copy";
     },
+
+    scroll(e) {
+      this.scrollTop = e.target.scrollTop;
+      this.scrollLeft = e.target.scrollLeft;
+    },
   },
 };
 </script>
@@ -151,6 +169,7 @@ export default {
       margin-right: 262px;
       background-color: #2b2e33;
       height: 100%;
+      position: relative;
 
       .content {
         width: 100%;
@@ -159,7 +178,8 @@ export default {
 
         .editor-wrap {
           display: inline-block;
-          padding: 20px;
+          padding: 40px;
+          position: relative;
         }
       }
     }

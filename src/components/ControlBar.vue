@@ -61,13 +61,16 @@ export default {
     this.scale = this.canvasStyleData.scale;
     this.handleScaleChange = _.debounce(() => {
       let dom = document.querySelector(".editor-wrap");
-      dom.style.transformOrigin = "0 0";
+      dom.style.transformOrigin = "40px 40px";
       dom.style.transform = `scale(${this.scale / 100})`;
       this.$store.commit("setCanvasStyle", {
         ...this.canvasStyleData,
         scale: this.scale,
       });
     }, 1000);
+  },
+  mounted() {
+    this.handleScaleChange();
   },
   methods: {
     undo() {
