@@ -17,6 +17,11 @@ export default {
         this.resize();
       },
     },
+    'element.chart': {
+      handler: function () {
+        this.setOption();
+      },
+    },
   },
   created() {
     this.resize = _.debounce(() => {

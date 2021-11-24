@@ -54,17 +54,20 @@ const data = {
       state.canvasStyleData = style;
     },
 
+    setChartData(state, chart) {
+      state.curComponent.chart = chart;
+    },
+
     setCurComponent(state, { component, index }) {
       state.curComponent = component;
       state.curComponentIndex = index;
     },
 
-    setShapeStyle({ curComponent }, { top, left, width, height, rotate }) {
+    setShapeStyle({ curComponent }, { top, left, width, height }) {
       if (top) curComponent.style.top = top;
       if (left) curComponent.style.left = left;
       if (width) curComponent.style.width = width;
       if (height) curComponent.style.height = height;
-      if (rotate) curComponent.style.rotate = rotate;
     },
 
     setShapeSingleStyle({ curComponent }, { key, value }) {

@@ -25,10 +25,12 @@
       </section>
       <!-- 右侧属性列表 -->
       <section class="right">
-        <el-tabs v-model="activeName">
-          <el-tab-pane label="属性" name="attr">
-            <AttrList v-if="curComponent" />
-            <p v-else class="placeholder">请选择组件</p>
+        <el-tabs v-model="activeName" :stretch="true" v-if="curComponent">
+          <el-tab-pane label="基础属性" name="attr">
+            <AttrList/>
+          </el-tab-pane>
+          <el-tab-pane label="图表配置" name="chart">
+            <ChartAttrList/>
           </el-tab-pane>
         </el-tabs>
       </section>
@@ -41,6 +43,7 @@ import Editor from "@/components/Editor/index";
 import CompList from "@/components/CompList"; // 左侧列表组件
 import AttrList from "@/components/AttrList"; // 右侧属性列表
 import componentList from "@/custom/componentList"; // 左侧列表数据
+import ChartAttrList from "@/custom/ChartAttrList"; // 左侧列表数据
 import Toolbar from "@/components/Toolbar";
 import ControlBar from "@/components/ControlBar";
 import MarkLine from "@/components/MarkLine";
@@ -57,11 +60,12 @@ export default {
     Toolbar,
     ControlBar,
     Rule,
-    MarkLine
+    MarkLine,
+    ChartAttrList
   },
   data() {
     return {
-      activeName: "attr",
+      activeName: "chart",
       scrollTop: 0,
       scrollLeft: 0,
     };

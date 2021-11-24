@@ -16,24 +16,67 @@ export default {
     },
   },
   mixins: [chartMixin],
+  data() {
+    return {
+      inter: null,
+    };
+  },
   methods: {
+    // 动态数据模拟
+    fetch() {
+      let resp = [
+        {
+          label: "Mon",
+          value: 20,
+        },
+        {
+          label: "Tue",
+          value: 30,
+        },
+        {
+          label: "Wed",
+          value: 40,
+        },
+        {
+          label: "Thu",
+          value: 50,
+        },
+        {
+          label: "Fri",
+          value: 60,
+        },
+        {
+          label: "Sat",
+          value: 70,
+        },
+        {
+          label: "Sun",
+          value: 80,
+        },
+      ];
+      let { url, filter, option } = _.deepClone(this.element.chart);
+      console.log("fetch:" + url);
+      Promise.resolve(resp).then((res) => {
+        eval("window._filter = " + filter);
+        let data = _filter(res);
+        option.xAxis.data = data.map((d) => d.label);
+        option.series[0].data = data.map((d) =>
+          Math.floor(Math.random() * 100)
+        );
+        this.chart.setOption(option);
+      });
+    },
     setOption() {
-      let option = {
-        xAxis: {
-          type: "category",
-          data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-        },
-        yAxis: {
-          type: "value",
-        },
-        series: [
-          {
-            data: [150, 230, 224, 218, 135, 147, 260],
-            type: "line",
-          },
-        ],
-      };
-      this.chart.setOption(option);
+      let { option, mock, dataType, interval } = _.deepClone(this.element.chart);
+      clearInterval(this.inter);
+      if (dataType === 1) {
+        this.inter = setInterval(this.fetch, interval * 1000);
+        this.fetch();
+      } else {
+        option.xAxis.data = mock.map((d) => d.label);
+        option.series[0].data = mock.map((d) => d.value);
+        this.chart.setOption(option);
+      }
     },
   },
 };

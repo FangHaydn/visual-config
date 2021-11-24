@@ -1,20 +1,7 @@
 // 公共样式
 export const commonStyle = {
-  rotate: 0,
-  opacity: 1,
   width: 200,
   height: 200,
-  fontSize: 14,
-  fontWeight: 500,
-  lineHeight: '',
-  letterSpacing: 0,
-  textAlign: 'left',
-  color: '#ccc',
-  borderColor: '#999',
-  borderWidth: 1,
-  backgroundColor: '',
-  borderStyle: 'solid',
-  verticalAlign: 'middle',
 };
 
 export const commonAttr = {
@@ -33,6 +20,72 @@ const list = [
     style: {
       width: 200,
       height: 200,
+      borderColor: '#999',
+      borderWidth: 1,
+      backgroundColor: '',
+      borderStyle: 'solid',
+    },
+    chart: {
+      colors: ['#1890FF', '#FAAD14', '#00A4B4', '#9289FD', '#F6687E'],
+      dataType: 2,
+      url: '',
+      filter: 'function filter(resp) {return resp}',
+      interval: 10,
+      mock: [
+        {
+          label: 'Mon',
+          value: 20,
+        },
+        {
+          label: 'Tue',
+          value: 30,
+        },
+        {
+          label: 'Wed',
+          value: 40,
+        },
+        {
+          label: 'Thu',
+          value: 50,
+        },
+        {
+          label: 'Fri',
+          value: 60,
+        },
+        {
+          label: 'Sat',
+          value: 70,
+        },
+        {
+          label: 'Sun',
+          value: 80,
+        },
+      ],
+      option: {
+        tooltip: {
+          trigger: 'axis',
+        },
+        grid: {
+          top: 40,
+          left: 40,
+          right: 40,
+          bottom: 40,
+        },
+        xAxis: {
+          type: 'category',
+          data: [],
+        },
+        yAxis: {
+          type: 'value',
+        },
+        series: [
+          {
+            data: [],
+            type: 'line',
+            smooth: true,
+          },
+        ],
+      },
     },
   },
 ];
