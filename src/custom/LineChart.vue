@@ -54,11 +54,9 @@ export default {
           value: 80,
         },
       ];
-      let { url, filter, option } = _.deepClone(this.element.chart);
-      console.log("fetch:" + url);
+      let { option } = _.deepClone(this.element.chart);
       Promise.resolve(resp).then((res) => {
-        eval("window._filter = " + filter);
-        let data = _filter(res);
+        let data = this._filter(res);
         option.xAxis.data = data.map((d) => d.label);
         option.series[0].data = data.map((d) =>
           Math.floor(Math.random() * 100)
@@ -67,10 +65,16 @@ export default {
       });
     },
     setOption() {
-      let { option, mock, dataType, interval } = _.deepClone(this.element.chart);
+      let { option, mock, dataType, interval, filter } = _.deepClone(
+        this.element.chart
+      );
       clearInterval(this.inter);
       if (dataType === 1) {
-        this.inter = setInterval(this.fetch, interval * 1000);
+        eval("this._filter = " + filter);
+        if (interval > 0) {
+          // 更新频率小于等于0就不会刷新
+          this.inter = setInterval(this.fetch, interval * 1000);
+        }
         this.fetch();
       } else {
         option.xAxis.data = mock.map((d) => d.label);

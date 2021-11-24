@@ -50,6 +50,7 @@ export default {
     align-items: center;
     justify-content: center;
     box-shadow: 0 0 10px -3px #0003;
+    color: #aaa;
     .icon {
       font-size: 28px;
       margin-bottom: 5px;

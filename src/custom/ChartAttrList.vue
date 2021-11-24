@@ -16,33 +16,20 @@
           <el-input v-model="form.url" />
         </el-form-item>
         <el-form-item label="数据过滤">
-          <el-input
-            type="textarea"
-            :autosize="true"
-            :rows="5"
-            v-model="form.filter"
-          />
+          <Ace mode="javascript" :content.sync="form.filter" />
         </el-form-item>
-        <el-button type="primary" @click="test">测试接口</el-button>
-        <el-input type="textarea" :autosize="true" :rows="5" v-model="out" />
+        <el-form-item v-if="form.url">
+          <el-button type="primary" @click="test">测试接口</el-button>
+          <el-input type="textarea" :autosize="true" :rows="5" v-model="out" />
+        </el-form-item>
       </template>
       <template v-if="form.dataType === 2">
         <el-form-item label="静态数据">
-          <el-input
-            type="textarea"
-            :autosize="true"
-            :rows="5"
-            v-model="form.mock"
-          />
+          <Ace mode="json" :content.sync="form.mock" />
         </el-form-item>
       </template>
       <el-form-item label="图表配置">
-        <el-input
-          type="textarea"
-          :autosize="true"
-          :rows="5"
-          v-model="form.option"
-        />
+        <Ace mode="json" :content.sync="form.option" />
       </el-form-item>
       <el-button type="primary" @click="submit">提交修改</el-button>
     </el-form>
@@ -50,7 +37,13 @@
 </template>
 
 <script>
+import Ace from "@/components/Ace";
+import { mapState } from "vuex";
+
 export default {
+  components: {
+    Ace,
+  },
   data() {
     return {
       form: {
@@ -64,18 +57,26 @@ export default {
       out: "",
     };
   },
-  created() {
-    let chart = this.$store.state.curComponent.chart;
-    this.form.mock = JSON.stringify(chart.mock);
-    this.form.option = JSON.stringify(chart.option);
-    this.form.dataType = chart.dataType;
-    this.form.url = chart.url;
-    this.form.filter = chart.filter;
-    this.form.interval = chart.interval;
+  watch: {
+    "curComponent.id": {
+      handler: function () {
+        if (this.curComponent) {
+          let chart = this.curComponent.chart;
+          this.form.mock = JSON.stringify(chart.mock);
+          this.form.option = JSON.stringify(chart.option);
+          this.form.dataType = chart.dataType;
+          this.form.url = chart.url;
+          this.form.filter = chart.filter;
+          this.form.interval = chart.interval;
+        }
+      },
+      immediate: true
+    },
   },
+  computed: { ...mapState(["curComponent"]) },
   methods: {
     test() {
-      // FIXME:
+      // FIXME:通过接口获取动态数据
       let resp = {
         data: [
           { a: 4, b: "a" },
@@ -84,9 +85,8 @@ export default {
           { a: 6, b: "d" },
         ],
       };
-      eval("window._filter = " + this.form.filter);
-
-      this.out = JSON.stringify(_filter(resp));
+      eval("this._filter = " + this.form.filter);
+      this.out = JSON.stringify(this._filter(resp));
     },
     submit() {
       try {

@@ -58,6 +58,7 @@ export default {
   padding: 0 16px;
   background: #1e1e1e;
   border-bottom: 1px solid #111;
+  color: #aaa;
 
   .el-button {
     font-size: 16px;

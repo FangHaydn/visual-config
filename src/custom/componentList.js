@@ -29,7 +29,7 @@ const list = [
       colors: ['#1890FF', '#FAAD14', '#00A4B4', '#9289FD', '#F6687E'],
       dataType: 2,
       url: '',
-      filter: 'function filter(resp) {return resp}',
+      filter: 'function filter(resp) {return resp;}',
       interval: 10,
       mock: [
         {

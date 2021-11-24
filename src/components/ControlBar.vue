@@ -119,6 +119,7 @@ export default {
 
   .scale {
     width: 60px;
+    color: #aaa;
     text-align: center;
     display: inline-block;
     font-size: 14px;
