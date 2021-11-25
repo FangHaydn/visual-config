@@ -68,6 +68,7 @@ export default {
   .el-button--small {
     font-size: 15px;
     padding: 5px;
+    width: 32px;
   }
 }
 </style>

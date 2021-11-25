@@ -1,4 +1,3 @@
-<!-- TODO: 这个页面后续将用 JSX 重构 -->
 <template>
   <div class="attr-list">
     <el-form>

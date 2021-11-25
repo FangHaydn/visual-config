@@ -21,6 +21,9 @@ const data = {
       // 页面全局数据
       width: 1200,
       height: 740,
+      backgroundColor: "#000000FF",
+      img: "",
+      thumb: "",
       scale: 100,
     },
     componentData: [], // 画布组件数据

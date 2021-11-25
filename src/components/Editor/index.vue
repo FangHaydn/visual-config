@@ -5,6 +5,7 @@
     :style="{
       width: canvasStyleData.width + 'px',
       height: canvasStyleData.height + 'px',
+      background: canvasStyleData.img ? `center / cover no-repeat url(${canvasStyleData.img})` :canvasStyleData.backgroundColor,
     }"
     @click="onClickEditor"
     @contextmenu="handleEditorContextMenu"
@@ -152,7 +153,6 @@ export default {
         index: null,
       });
       // 计算菜单相对于编辑器的位移
-      let target = e.target;
       let top = e.offsetY;
       let left = e.offsetX;
       this.$store.commit("showContextMenu", { top, left });
@@ -168,7 +168,6 @@ export default {
 <style lang="scss" scoped>
 .editor {
   position: relative;
-  background: #030303;
   box-shadow: 0 0 10px 0px #0003;
 
   .vdr {

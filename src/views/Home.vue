@@ -25,12 +25,17 @@
       </section>
       <!-- 右侧属性列表 -->
       <section class="right">
-        <el-tabs v-model="activeName" :stretch="true" v-if="curComponent">
-          <el-tab-pane label="基础属性" name="attr">
-            <AttrList/>
+        <el-tabs v-model="activeName" :stretch="true" v-show="curComponent">
+          <el-tab-pane label="基础属性" name="attr" v-if="curComponent">
+            <ShapeAttrList/>
           </el-tab-pane>
-          <el-tab-pane label="图表配置" name="chart">
+          <el-tab-pane label="图表配置" name="chart" v-if="curComponent">
             <ChartAttrList/>
+          </el-tab-pane>
+        </el-tabs>
+        <el-tabs v-model="activeName2" :stretch="true" v-show="!curComponent">
+          <el-tab-pane label="页面配置" name="page">
+            <PageAttrList/>
           </el-tab-pane>
         </el-tabs>
       </section>
@@ -41,7 +46,8 @@
 <script>
 import Editor from "@/components/Editor/index";
 import CompList from "@/components/CompList"; // 左侧列表组件
-import AttrList from "@/components/AttrList"; // 右侧属性列表
+import ShapeAttrList from "@/components/ShapeAttrList"; // 右侧属性列表
+import PageAttrList from "@/components/PageAttrList"; // 右侧属性列表
 import componentList from "@/custom/componentList"; // 左侧列表数据
 import ChartAttrList from "@/custom/ChartAttrList"; // 左侧列表数据
 import Toolbar from "@/components/Toolbar";
@@ -56,16 +62,18 @@ export default {
   components: {
     Editor,
     CompList,
-    AttrList,
+    ShapeAttrList,
     Toolbar,
     ControlBar,
     Rule,
     MarkLine,
-    ChartAttrList
+    ChartAttrList,
+    PageAttrList
   },
   data() {
     return {
       activeName: "attr",
+      activeName2: 'page',
       scrollTop: 0,
       scrollLeft: 0,
     };
