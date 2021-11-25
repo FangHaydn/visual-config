@@ -3,10 +3,11 @@
     <div
       class="bar"
       :style="{
-        width: direction === 'ver' ? '20px' : numbers + 100 + 'px',
-        transform: `translate${
-          direction === 'ver' ? 'Y' : 'X'
-        }(-${move}px) scale(${canvasStyleData.scale / 100})`,
+        width:
+          direction === 'ver'
+            ? '20px'
+            : (numbers + 100) * (canvasStyleData.scale / 100) + 'px',
+        transform: `translate${direction === 'ver' ? 'Y' : 'X'}(-${move}px)`,
       }"
     >
       <div
@@ -16,6 +17,7 @@
           'tag',
           (item - 1) % 10 === 0 ? 'h10' : (item - 1) % 5 === 0 ? 'h7' : null,
         ]"
+        :style="tagStyle"
       >
         <span v-if="(item - 1) % 10 === 0" class="num">{{
           (item - 1) * 10
@@ -47,6 +49,12 @@ export default {
     },
   },
   computed: {
+    tagStyle() {
+      let style = {};
+      style[this.direction === "ver" ? "height" : "width"] =
+        (this.canvasStyleData.scale / 100) * 10 + "px";
+      return style;
+    },
     tags() {
       return Math.ceil(this.numbers / 100) * 10 + 1;
     },
@@ -89,7 +97,7 @@ export default {
         left: 3px;
         top: -5px;
         font-size: 10px;
-        color: #eee;
+        color: #bbb;
       }
     }
     .h7 {
@@ -122,7 +130,7 @@ export default {
         left: -5px;
         top: 3px;
         font-size: 10px;
-        color: #eee;
+        color: #bbb;
         writing-mode: vertical-lr;
       }
     }
