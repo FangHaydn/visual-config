@@ -3,23 +3,25 @@
     <el-form>
       <el-form-item label="数据来源">
         <el-radio-group v-model="form.dataType">
-          <el-radio :label="1">动态数据</el-radio>
-          <el-radio :label="2">静态数据</el-radio>
+          <el-radio :label="1">动态</el-radio>
+          <el-radio :label="2">静态</el-radio>
         </el-radio-group>
       </el-form-item>
       <template v-if="form.dataType === 1">
         <el-form-item label="更新频率">
           <el-input-number controls-position="right" v-model="form.interval" />秒
         </el-form-item>
-        <el-form-item label="动态数据url">
+        <el-form-item label="数据接口">
           <el-input v-model="form.url" />
         </el-form-item>
         <el-form-item label="数据过滤">
           <Ace mode="javascript" :content.sync="form.filter" />
         </el-form-item>
-        <el-form-item v-if="form.url">
-          <el-button type="primary" @click="test">测试接口</el-button>
-          <el-input type="textarea" :autosize="true" :rows="5" v-model="out" />
+        <el-form-item>
+          <el-button type="primary" @click="test" :disabled="!form.url">测试接口</el-button>
+        </el-form-item>
+        <el-form-item label="测试结果">
+          <Ace mode="json" :content.sync="out" />
         </el-form-item>
       </template>
       <template v-if="form.dataType === 2">
@@ -27,6 +29,7 @@
           <Ace mode="json" :content.sync="form.mock" />
         </el-form-item>
       </template>
+      <el-divider></el-divider>
       <el-form-item label="图表配置">
         <Ace mode="json" :content.sync="form.option" />
       </el-form-item>
@@ -109,11 +112,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.attr-list {
-  overflow: auto;
-  padding: 20px;
-  padding-top: 0;
-  height: 100%;
-}
+<style lang="scss">
+@import '~@/styles/attr-list.scss';
+
 </style>

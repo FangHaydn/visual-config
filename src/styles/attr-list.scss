@@ -1,0 +1,31 @@
+.attr-list {
+  overflow: auto;
+  padding: 0px 14px 20px;
+  height: 100%;
+
+  .el-form {
+    .el-form-item {
+      margin-bottom: 10px;
+      .el-form-item__label {
+        width: 80px;
+        text-align: left;
+        color: #bbb;
+      }
+      .el-form-item__content {
+        .el-select, .el-input-number {
+          width: 130px;
+        }
+        .el-radio {
+          .el-radio__label {
+            color: #777;
+          }
+        }
+      }
+    }
+
+    .el-divider {
+      background-color: #666;
+      margin: 18px 0 10px;
+    }
+  }
+}

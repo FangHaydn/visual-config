@@ -109,11 +109,6 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.attr-list {
-  overflow: auto;
-  padding: 20px;
-  padding-top: 0;
-  height: 100%;
-}
+<style lang="scss">
+@import '~@/styles/attr-list.scss';
 </style>
