@@ -23,7 +23,6 @@
 import { getStyle } from "@/utils/style";
 import { mapState } from "vuex";
 import ComponentWrapper from "./ComponentWrapper";
-import { changeStyleWithScale } from "@/utils/translate";
 
 export default {
   model: {
@@ -39,7 +38,9 @@ export default {
   components: { ComponentWrapper },
   computed: mapState(["componentData", "canvasStyleData"]),
   methods: {
-    changeStyleWithScale,
+    changeStyleWithScale(value) {
+      return (value * parseInt(store.state.canvasStyleData.scale)) / 100;
+    },
 
     getStyle,
 
