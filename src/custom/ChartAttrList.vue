@@ -10,7 +10,7 @@
       </el-form-item>
       <template v-if="form.dataType === 1">
         <el-form-item label="更新频率">
-          <el-input-number v-model="form.interval" />秒
+          <el-input-number controls-position="right" v-model="form.interval" />秒
         </el-form-item>
         <el-form-item label="动态数据url">
           <el-input v-model="form.url" />

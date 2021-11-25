@@ -1,21 +1,9 @@
 <template>
   <div class="control-bar">
     <div>
-      <el-button
-        @click="undo"
-        icon="icon-undo"
-        type="text"
-      ></el-button>
-      <el-button
-        @click="redo"
-        icon="icon-redo"
-        type="text"
-      ></el-button>
-      <el-button
-        @click="clearCanvas"
-        icon="icon-clear"
-        type="text"
-      ></el-button>
+      <el-button @click="undo" icon="icon-undo" type="text"></el-button>
+      <el-button @click="redo" icon="icon-redo" type="text"></el-button>
+      <el-button @click="clearCanvas" icon="icon-clear" type="text"></el-button>
     </div>
     <div>
       <el-button
@@ -113,13 +101,14 @@ export default {
   justify-content: space-between;
   padding: 0 20px;
 
-  .el-button {
-    font-size: 14px;
+  .el-button--text {
+    font-size: 15px;
+    color: #bbb;
   }
 
   .scale {
     width: 60px;
-    color: #aaa;
+    color: #bbb;
     text-align: center;
     display: inline-block;
     font-size: 14px;

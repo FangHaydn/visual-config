@@ -20,10 +20,11 @@ const list = [
     style: {
       width: 200,
       height: 200,
-      borderColor: '#999',
+      borderColor: '#666666FF',
       borderWidth: 1,
-      backgroundColor: '',
+      backgroundColor: '#00000000',
       borderStyle: 'solid',
+      borderRadius: 2,
     },
     chart: {
       colors: ['#1890FF', '#FAAD14', '#00A4B4', '#9289FD', '#F6687E'],

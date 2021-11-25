@@ -65,7 +65,7 @@ export default {
   },
   data() {
     return {
-      activeName: "chart",
+      activeName: "attr",
       scrollTop: 0,
       scrollLeft: 0,
     };
@@ -144,7 +144,7 @@ export default {
   background-color: #000;
 
   .main {
-    height: calc(100% - 56px); //toolbar.height=56
+    height: calc(100% - 45px); //toolbar.height=45
     position: relative;
 
     .left {
@@ -166,7 +166,7 @@ export default {
       background-color: #13161a;
 
       .el-tab-pane {
-        height: calc(100vh - 56px - 55px);
+        height: calc(100vh - 45px - 55px);
         overflow-y: scroll;
       }
     }
