@@ -1,15 +1,32 @@
 <template>
   <div @dragstart="handleDragStart" class="component-list">
-    <div
-      v-for="(item, index) in componentList"
-      :key="index"
-      class="list"
-      draggable
-      :data-index="index"
-    >
-      <i :class="['icon', item.icon]"></i>
-      <span>{{ item.label }}</span>
-    </div>
+    <p class="title">资产库</p>
+    <el-collapse v-model="activeName" accordion>
+      <el-collapse-item title="图表" name="1">
+        <div
+          v-for="(item, index) in componentList"
+          :key="index"
+          class="list"
+          draggable
+          :data-index="index"
+        >
+          <i :class="['icon', item.icon]"></i>
+          <span>{{ item.label }}</span>
+        </div>
+      </el-collapse-item>
+      <el-collapse-item title="地图" name="2">
+        <div
+          v-for="(item, index) in componentList"
+          :key="index"
+          class="list"
+          draggable
+          :data-index="index"
+        >
+          <i :class="['icon', item.icon]"></i>
+          <span>{{ item.label }}</span>
+        </div>
+      </el-collapse-item>
+    </el-collapse>
   </div>
 </template>
 
@@ -20,6 +37,7 @@ export default {
   data() {
     return {
       componentList,
+      activeName: "1",
     };
   },
   methods: {
@@ -30,20 +48,34 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .component-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  padding: 20px;
+  .title {
+    color: #ccc;
+    line-height: 48px;
+    padding-left: 5px;
+    font-size: 16px;
+  }
+  .el-collapse {
+    border-width: 0;
+  }
+  .el-collapse-item__header {
+    background-color: #333;
+    padding-left: 5px;
+    border-bottom: 1px solid #13161a;
+  }
+  .el-collapse-item__wrap {
+    border-bottom: none;
+    background-color: transparent;
+  }
 
   .list {
-    width: 100%;
+    // width: 100%;
     height: 80px;
     font-size: 14px;
     background-color: #222;
     cursor: grab;
-    margin-bottom: 10px;
+    margin: 10px;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -54,7 +86,7 @@ export default {
     .icon {
       font-size: 28px;
       margin-bottom: 5px;
-      color: #409EFF;
+      color: #409eff;
     }
 
     &:active {

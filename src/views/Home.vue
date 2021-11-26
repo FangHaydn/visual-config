@@ -5,7 +5,7 @@
     <div class="main">
       <!-- 左侧组件列表 -->
       <section class="left">
-
+        <LayerList/>
       </section>
       <section class="left2">
         <CompList />
@@ -49,6 +49,7 @@
 <script>
 import Editor from "@/components/Editor/index";
 import CompList from "@/components/CompList"; // 左侧列表组件
+import LayerList from "@/components/LayerList"; // 左侧图层组件
 import ShapeAttrList from "@/components/ShapeAttrList"; // 右侧属性列表
 import PageAttrList from "@/components/PageAttrList"; // 右侧属性列表
 import componentList from "@/custom/componentList"; // 左侧列表数据
@@ -65,6 +66,7 @@ export default {
   components: {
     Editor,
     CompList,
+    LayerList,
     ShapeAttrList,
     Toolbar,
     ControlBar,
@@ -164,9 +166,8 @@ export default {
       width: 150px;
       left: 0;
       top: 0;
-      padding-top: 10px;
       background-color: #13161a;
-      border-right: 1px solid #111;
+      border-right: 1px solid #2b2e33;
     }
 
     .left2 {
@@ -175,7 +176,6 @@ export default {
       width: 150px;
       left: 150px;
       top: 0;
-      padding-top: 10px;
       background-color: #13161a;
     }
 
