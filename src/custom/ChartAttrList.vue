@@ -9,7 +9,7 @@
       </el-form-item>
       <template v-if="form.dataType === 1">
         <el-form-item label="更新频率">
-          <el-input-number controls-position="right" v-model="form.interval" />秒
+          <el-input-number controls-position="right" v-model="form.interval" /> <span class="unit">秒</span>
         </el-form-item>
         <el-form-item label="数据接口">
           <el-input v-model="form.url" />

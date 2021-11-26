@@ -5,6 +5,9 @@
     <div class="main">
       <!-- 左侧组件列表 -->
       <section class="left">
+
+      </section>
+      <section class="left2">
         <CompList />
       </section>
       <!-- 中间画布 -->
@@ -158,8 +161,19 @@ export default {
     .left {
       position: absolute;
       height: 100%;
-      width: 200px;
+      width: 150px;
       left: 0;
+      top: 0;
+      padding-top: 10px;
+      background-color: #13161a;
+      border-right: 1px solid #111;
+    }
+
+    .left2 {
+      position: absolute;
+      height: 100%;
+      width: 150px;
+      left: 150px;
       top: 0;
       padding-top: 10px;
       background-color: #13161a;
@@ -168,7 +182,7 @@ export default {
     .right {
       position: absolute;
       height: 100%;
-      width: 262px;
+      width: 250px;
       right: 0;
       top: 0;
       background-color: #13161a;
@@ -180,8 +194,8 @@ export default {
     }
 
     .center {
-      margin-left: 200px;
-      margin-right: 262px;
+      margin-left: 300px;
+      margin-right: 250px;
       background-color: #2b2e33;
       height: 100%;
       position: relative;
@@ -198,11 +212,6 @@ export default {
         }
       }
     }
-  }
-
-  .placeholder {
-    text-align: center;
-    color: #333;
   }
 }
 </style>

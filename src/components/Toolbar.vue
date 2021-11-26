@@ -69,6 +69,7 @@ export default {
     font-size: 15px;
     padding: 5px;
     width: 32px;
+    color: #fff;
   }
 }
 </style>
