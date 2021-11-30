@@ -53,7 +53,7 @@ import LayerList from "@/components/LayerList"; // 左侧图层组件
 import ShapeAttrList from "@/components/ShapeAttrList"; // 右侧属性列表
 import PageAttrList from "@/components/PageAttrList"; // 右侧属性列表
 import componentList from "@/custom/componentList"; // 左侧列表数据
-import ChartAttrList from "@/custom/ChartAttrList"; // 左侧列表数据
+import ChartAttrList from "@/custom/chart/ChartAttrList"; // 左侧列表数据
 import Toolbar from "@/components/Toolbar";
 import ControlBar from "@/components/ControlBar";
 import MarkLine from "@/components/MarkLine";

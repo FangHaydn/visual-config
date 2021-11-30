@@ -1,7 +1,7 @@
 import Vue from 'vue';
 
-const components = ['LineChart'];
+const chartComponents = ['LineChart'];
 
-components.forEach(key => {
-  Vue.component(key, () => import(`@/custom/${key}`));
+chartComponents.forEach(key => {
+  Vue.component(key, () => import(`@/custom/chart/${key}`));
 });

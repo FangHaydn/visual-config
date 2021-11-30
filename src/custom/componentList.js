@@ -1,3 +1,5 @@
+import {singleDimen, multiDimen} from '@/mock/chart'
+import {single, singleSmooth} from '@/custom/chart/lineChartOptions'
 // 公共样式
 export const commonStyle = {
   width: 200,
@@ -15,7 +17,7 @@ export const commonAttr = {
 const list = [
   {
     component: 'line-chart',
-    label: '折线图',
+    label: '基础折线图',
     icon: 'icon-linechart',
     style: {
       width: 200,
@@ -32,61 +34,31 @@ const list = [
       url: '',
       filter: 'function filter(resp) {return resp;}',
       interval: 10,
-      mock: [
-        {
-          label: 'Mon',
-          value: 20,
-        },
-        {
-          label: 'Tue',
-          value: 30,
-        },
-        {
-          label: 'Wed',
-          value: 40,
-        },
-        {
-          label: 'Thu',
-          value: 50,
-        },
-        {
-          label: 'Fri',
-          value: 60,
-        },
-        {
-          label: 'Sat',
-          value: 70,
-        },
-        {
-          label: 'Sun',
-          value: 80,
-        },
-      ],
-      option: {
-        tooltip: {
-          trigger: 'axis',
-        },
-        grid: {
-          top: 40,
-          left: 40,
-          right: 40,
-          bottom: 40,
-        },
-        xAxis: {
-          type: 'category',
-          data: [],
-        },
-        yAxis: {
-          type: 'value',
-        },
-        series: [
-          {
-            data: [],
-            type: 'line',
-            smooth: true,
-          },
-        ],
-      },
+      mock: singleDimen,
+      option: single
+    },
+  },
+  {
+    component: 'line-chart',
+    label: '圆滑折线图',
+    icon: 'icon-linechart',
+    style: {
+      width: 200,
+      height: 200,
+      borderColor: '#666666FF',
+      borderWidth: 1,
+      backgroundColor: '#00000000',
+      borderStyle: 'solid',
+      borderRadius: 2,
+    },
+    chart: {
+      colors: ['#1890FF', '#FAAD14', '#00A4B4', '#9289FD', '#F6687E'],
+      dataType: 2,
+      url: '',
+      filter: 'function filter(resp) {return resp;}',
+      interval: 10,
+      mock: singleDimen,
+      option: singleSmooth
     },
   },
 ];
